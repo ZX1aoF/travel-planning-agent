@@ -108,10 +108,19 @@ def build_callback_handler():
             self.tool_errors = []
 
         def on_llm_end(self, response, **kwargs):
+            # 不同 LangChain 版本取值位置不同：旧版在 llm_output.token_usage，
+            # 新版在 message.usage_metadata，这里都尝试一遍。
             try:
-                usage = (response.llm_output or {}).get("token_usage") or {}
+                usage = (getattr(response, "llm_output", None) or {}).get("token_usage") or {}
                 self.input_tokens += int(usage.get("prompt_tokens", 0) or 0)
                 self.output_tokens += int(usage.get("completion_tokens", 0) or 0)
+                if not usage:
+                    for gens in getattr(response, "generations", []) or []:
+                        for gen in gens:
+                            meta = getattr(getattr(gen, "message", None), "usage_metadata", None)
+                            if meta:
+                                self.input_tokens += int(meta.get("input_tokens", 0) or 0)
+                                self.output_tokens += int(meta.get("output_tokens", 0) or 0)
             except Exception:
                 pass
 
