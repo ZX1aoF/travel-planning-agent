@@ -73,6 +73,8 @@ class MCPToolManager:
         with open(self.config_path, 'r', encoding='utf-8') as f:
             config = json.load(f)
 
+        # 重复初始化（如配置热更新后重连）时清空上一轮状态，避免旧失败记录残留
+        self.failed_servers.clear()
         self.exit_stack = AsyncExitStack()
 
         for server_conf in config.get("mcp_servers", []):
