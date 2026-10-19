@@ -4,6 +4,15 @@
 
 > **架构升级**: 已从 LangGraph 迁移到 **LangChain Agent**，无递归限制，支持复杂多目的地行程规划。
 
+> ### 🔀 Fork 说明
+> 本仓库 fork 自 [alexlmoney83-oss/travel-planning-agent](https://github.com/alexlmoney83-oss/travel-planning-agent)，原项目采用 MIT 协议，感谢原作者的开源贡献。
+>
+> 本 fork 在原项目基础上的改动：
+> 1. **修复依赖声明缺失**：`aggentic_RAG/requirements.txt` 补充 `openai-agents` —— 原文件缺失该依赖，而 `tools/mcp_tools.py` 中 `from agents.mcp import MCPServerSse` 依赖它，导致按 README 执行 `pip install -r requirements.txt` 后项目无法启动（`setup.py` 中已有声明，属 requirements.txt 遗漏）；
+> 2. **新增源码研读笔记**（见 `docs/`）：项目结构分析、调用链梳理与已知问题清单（graph/ 废弃代码仍被 core/agent_executor.py 引用、servers_config.json 示例端点为空等），供后续维护参考。
+>
+> 详细改动请查看本 fork 相对上游的 [commit 记录](https://github.com/ZX1aoF/travel-planning-agent/commits/main)。
+
 ## 📋 目录
 
 - [项目简介](#项目简介)
