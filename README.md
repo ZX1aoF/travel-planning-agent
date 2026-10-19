@@ -10,7 +10,9 @@
 > 本 fork 在原项目基础上的改动：
 > 1. **修复依赖声明缺失**：`aggentic_RAG/requirements.txt` 补充 `openai-agents` —— 原文件缺失该依赖，而 `tools/mcp_tools.py` 中 `from agents.mcp import MCPServerSse` 依赖它，导致按 README 执行 `pip install -r requirements.txt` 后项目无法启动（`setup.py` 中已有声明，属 requirements.txt 遗漏）；
 > 2. **MCP 连接诊断增强**：原 `MCPToolManager.initialize()` 捕获连接异常后静默 `pass`，服务不可用时无从排查。现改为打印「服务器名 + 异常类型 + 原因」，并新增 `get_health()` 返回连接/失败清单，配合 `check_mcp_health.py` 定位问题；
-> 3. **新增源码研读笔记**（见 `docs/`）：项目结构分析、调用链梳理与已知问题清单（graph/ 废弃代码仍被 core/agent_executor.py 引用、servers_config.json 示例端点为空等），供后续维护参考。
+> 3. **修复健康检查误报**：`check_mcp_health.py` 原先把 `list_tools()` 返回的字符串列表当作对象解析，导致连接正常的服务器也被判为"无工具"；改为按 `List[str]` 处理，服务器列表改为从配置读取（不再漏掉 biying），补 `--json` 与非零退出码；
+> 4. **新增离线评估 `eval/`**：20 条固定用例（简单/完整/多目的地/复杂约束），输出成功率、单条耗时、token 消耗与分类通过率，可折算成本，用于改 Prompt 或换模型后的回归对比；
+> 5. **新增源码研读笔记**（见 `docs/`）：项目结构分析、调用链梳理与已知问题清单（graph/ 废弃代码仍被 core/agent_executor.py 引用、servers_config.json 示例端点为空等），供后续维护参考。
 >
 > 详细改动请查看本 fork 相对上游的 [commit 记录](https://github.com/ZX1aoF/travel-planning-agent/commits/main)。
 
@@ -730,6 +732,22 @@ from aggentic_RAG.travel_agent.tools.rag_tool import TravelRAGTool
 rag = TravelRAGTool()
 rag.build_knowledge_base("./aggentic_RAG/data/travel_docs")
 ```
+
+---
+
+## 🧪 离线评估
+
+`eval/` 提供一套固定用例的端到端评估，用于量化成功率、耗时与 token 成本，也便于改 Prompt / 换模型后做回归对比。
+
+```bash
+python eval/run_eval.py --selfcheck   # 只校验用例集
+python eval/run_eval.py --limit 3     # 冒烟
+python eval/run_eval.py               # 全量 20 条
+```
+
+- 用例：20 条，覆盖简单查询 / 完整规划 / 多目的地 / 复杂约束四类（`eval/cases.json`）
+- 输出：`eval/results/report-<时间戳>.json` 与 `.md`（成功率、平均耗时、token、分类通过率）
+- 说明：工具层复用项目自身的 `tool_registry` 与 `MCPToolManager`，编排层为精简 ReAct（不含 UI 渲染），详见 `eval/README.md`
 
 ---
 

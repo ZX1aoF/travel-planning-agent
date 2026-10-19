@@ -1,0 +1,146 @@
+{
+  "version": 1,
+  "note": "固定评估用例集：4 类场景 x 5 条。expect_any 为关键词命中判定（任一命中即视为内容相关），min_chars 为最小有效输出长度。",
+  "cases": [
+    {
+      "id": "simple-01",
+      "category": "simple",
+      "query": "杭州三日游有什么必去景点？",
+      "expect_any": ["杭州", "西湖", "景点"],
+      "min_chars": 150
+    },
+    {
+      "id": "simple-02",
+      "category": "simple",
+      "query": "成都适合秋天去的景点推荐",
+      "expect_any": ["成都", "景点", "秋"],
+      "min_chars": 150
+    },
+    {
+      "id": "simple-03",
+      "category": "simple",
+      "query": "青岛有哪些值得吃的美食？",
+      "expect_any": ["青岛", "美食", "海鲜"],
+      "min_chars": 150
+    },
+    {
+      "id": "simple-04",
+      "category": "simple",
+      "query": "西安两天能玩哪些地方？",
+      "expect_any": ["西安", "兵马俑", "城墙"],
+      "min_chars": 150
+    },
+    {
+      "id": "simple-05",
+      "category": "simple",
+      "query": "厦门鼓浪屿一日游怎么安排？",
+      "expect_any": ["鼓浪屿", "厦门", "一日"],
+      "min_chars": 150
+    },
+    {
+      "id": "full-01",
+      "category": "full",
+      "query": "我想12月从广州去哈尔滨玩4天，预算5000元，帮我做完整规划",
+      "expect_any": ["哈尔滨", "交通", "住宿", "预算"],
+      "min_chars": 400
+    },
+    {
+      "id": "full-02",
+      "category": "full",
+      "query": "下个月从深圳去成都玩3天，两个人，预算4000，要包含交通和住宿",
+      "expect_any": ["成都", "交通", "住宿", "预算"],
+      "min_chars": 400
+    },
+    {
+      "id": "full-03",
+      "category": "full",
+      "query": "11月从上海去西安3天，预算3000元，想看历史景点",
+      "expect_any": ["西安", "行程", "预算"],
+      "min_chars": 400
+    },
+    {
+      "id": "full-04",
+      "category": "full",
+      "query": "国庆从北京去青岛玩5天，预算8000，一家三口",
+      "expect_any": ["青岛", "行程", "住宿"],
+      "min_chars": 400
+    },
+    {
+      "id": "full-05",
+      "category": "full",
+      "query": "12月从武汉去三亚玩6天，预算10000，想要海边度假",
+      "expect_any": ["三亚", "住宿", "预算"],
+      "min_chars": 400
+    },
+    {
+      "id": "multi-01",
+      "category": "multi",
+      "query": "从广州出发，想玩长沙和武汉，一共5天，帮我规划路线",
+      "expect_any": ["长沙", "武汉", "路线"],
+      "min_chars": 400
+    },
+    {
+      "id": "multi-02",
+      "category": "multi",
+      "query": "从上海出发去苏州、无锡、南京，4天怎么安排顺序最合理？",
+      "expect_any": ["苏州", "无锡", "南京"],
+      "min_chars": 400
+    },
+    {
+      "id": "multi-03",
+      "category": "multi",
+      "query": "7天时间从成都出发玩重庆和贵阳，预算6000",
+      "expect_any": ["重庆", "贵阳", "预算"],
+      "min_chars": 400
+    },
+    {
+      "id": "multi-04",
+      "category": "multi",
+      "query": "从北京出发，想去天津和济南，3天时间够吗？帮我排一下",
+      "expect_any": ["天津", "济南", "行程"],
+      "min_chars": 400
+    },
+    {
+      "id": "multi-05",
+      "category": "multi",
+      "query": "从杭州出发玩宁波、舟山、台州，5天自驾怎么走",
+      "expect_any": ["宁波", "舟山", "台州"],
+      "min_chars": 400
+    },
+    {
+      "id": "complex-01",
+      "category": "complex",
+      "query": "带70岁老人和3岁小孩从广州去桂林4天，预算4500，行程要轻松",
+      "expect_any": ["桂林", "老人", "预算"],
+      "min_chars": 400
+    },
+    {
+      "id": "complex-02",
+      "category": "complex",
+      "query": "学生党，从长沙去重庆3天，预算只有1200，怎么安排最省",
+      "expect_any": ["重庆", "预算", "省"],
+      "min_chars": 400
+    },
+    {
+      "id": "complex-03",
+      "category": "complex",
+      "query": "公司团建20人，从深圳去惠州2天，预算人均800，要能开会和烧烤",
+      "expect_any": ["惠州", "团建", "预算"],
+      "min_chars": 400
+    },
+    {
+      "id": "complex-04",
+      "category": "complex",
+      "query": "对海鲜过敏，从厦门去汕头3天，预算2500，行程要避开海鲜餐厅",
+      "expect_any": ["汕头", "过敏", "预算"],
+      "min_chars": 400
+    },
+    {
+      "id": "complex-05",
+      "category": "complex",
+      "query": "12月底从北京去哈尔滨4天，预算6000，想看冰雪大世界但怕太冷",
+      "expect_any": ["哈尔滨", "冰雪", "预算"],
+      "min_chars": 400
+    }
+  ]
+}
